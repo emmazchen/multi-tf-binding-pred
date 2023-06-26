@@ -53,6 +53,35 @@ ax3.set_xlabel('Target negative loss probability')
 fig.text(0.04, 0.5, 'Predicted negative loss probability', va='center', rotation='vertical')
 fig.suptitle('Performance on test set after different numbers of epochs')
 
+
+
+# hexbins
+fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(30, 10), sharex=True, sharey=True,gridspec_kw={'width_ratios': [1, 1, 1.3]})
+
+hexbin1 = ax1.hexbin(targ10, pred10, gridsize=(7, 7), cmap='Blues')
+hexbin2 = ax2.hexbin(targ15, pred15, gridsize=(7, 7), cmap='Blues')
+hexbin3 = ax3.hexbin(targ20, pred20, gridsize=(7, 7), cmap='Blues')
+
+ax1.margins(0) 
+ax2.margins(0) 
+ax3.margins(0) 
+
+cbar3 = fig.colorbar(hexbin3, orientation='vertical')
+cbar3.set_label('Frequency')
+
+
+ax1.set_title(f'10 epochs, R^2={r_squared10:.4f}')
+ax2.set_title(f'15 epochs, R^2={r_squared15:.4f}')
+ax3.set_title(f'20 epochs, R^2={r_squared20:.4f}')
+
+fig.text(0.04, 0.5, 'Predicted negative loss probability', va='center', rotation='vertical')
+fig.text(0.5, 0.04, 'Target negative loss probability', ha='center')
+fig.suptitle('Performance on test set after different numbers of epochs')
+
+plt.subplots_adjust(wspace=0.1)
+
+plt.show()
+
 # %%
 """ Compare seen and unseen tf """
 pred20=torch.load("test_results/preds_epoch=20.pt")
@@ -129,5 +158,35 @@ ax3.set_xlabel('Target negative loss probability')
 
 fig.text(0.04, 0.5, 'Predicted negative loss probability', va='center', rotation='vertical')
 fig.suptitle('Performance on test set after various ablations (lr=1e-4, n_epoch=20 for all)')
+
+
+
+
+# hexbins
+fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(30, 10), sharex=True, sharey=True,gridspec_kw={'width_ratios': [1, 1, 1.3]})
+
+hexbin1 = ax1.hexbin(targ20, pred20, gridsize=(7, 7), cmap='Greens')
+hexbin2 = ax2.hexbin(targ20_ablateself, pred20_ablateself, gridsize=(7, 7), cmap='Greens')
+hexbin3 = ax3.hexbin(targ20_ablatecross, pred20_ablatecross, gridsize=(7, 7), cmap='Greens')
+
+ax1.margins(0) 
+ax2.margins(0) 
+ax3.margins(0) 
+
+cbar3 = fig.colorbar(hexbin3, orientation='vertical')
+cbar3.set_label('Frequency')
+
+
+ax1.set_title(f'Full model, R^2={r_squared20:.4f}')
+ax2.set_title(f'Ablate (post-cross attention) self attention, R^2={r_squared20_ablateself:.4f}')
+ax3.set_title(f'Ablate cross and self attention, R^2={r_squared20_ablatecross:.4f}')
+
+fig.text(0.04, 0.5, 'Predicted negative loss probability', va='center', rotation='vertical')
+fig.text(0.5, 0.04, 'Target negative loss probability', ha='center')
+fig.suptitle('Performance on test set after various ablations (lr=1e-4, n_epoch=20 for all)')
+
+plt.subplots_adjust(wspace=0.1)
+
+plt.show()
 
 # %%

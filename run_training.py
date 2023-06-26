@@ -17,7 +17,7 @@ from utils.padding_collate_fn import *
 #from utils.batch_sampler import *
 
 
-configfile = f"configs/ablate_self_config.json" 
+configfile = f"configs/different_prot_hidden_state.json" 
 with open(configfile) as stream:
     config = json.load(stream)
 

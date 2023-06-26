@@ -1,0 +1,64 @@
+{
+    "model_config":{
+        "model_name": "DifferentHiddenStateModel",
+        "model_kwargs": {
+
+            "hidden_state_n":-3,
+
+            "prot_demb": 320,
+            "dna_demb": 2560,
+            "cross_attentn_kwargs": {
+                "d_embedding": 400,
+                "n_heads": 4,
+                "ff_d_hidden":100,
+                "p_drop": 0.1
+            },
+            "self_attentn_kwargs": {
+                "d_embedding": 400,
+                "ff_d_hidden": 100,
+                "n_heads": 4,
+                "p_drop": 0.1
+            },
+            "mlp": {
+                "l1_kwargs": {
+                    "in_features": 800,
+                    "out_features": 100
+                },
+                "l2_kwargs": {
+                    "in_features": 100,
+                    "out_features": 40
+                },
+                "l3_kwargs": {
+                    "in_features": 40,
+                    "out_features": 1
+                }
+            },
+            "pad_idx": 1
+        }
+    },
+
+    "loss_config": {
+        "loss_fn": "nn.MSELoss",
+        "loss_kwargs":{
+            "reduction":"mean"
+        }
+    },
+
+    "optim_config": {
+        "optim_fn": "torch.optim.Adam",
+        "optim_kwargs":{
+            "lr": 0.0001,
+            "betas" : [0.9, 0.999],
+            "weight_decay" : 0.0001
+        }
+    },
+    "trainer_config": {
+        "max_epochs" : 20,
+        "devices" : 1,
+        "precision" : 16,
+        "log_every_n_steps" : 1
+    },
+    "batch_size": 5,
+    "wandb_project": "multi-tf-pretrained-seentf",
+    "dryrun": false
+}
